@@ -8,7 +8,7 @@ COPY . /app
 RUN mvn clean install
 
 # Этап исполнения
-FROM openjdk:11-jre-slim
+FROM openjdk:17-jre-slim
 
 WORKDIR /app
 
