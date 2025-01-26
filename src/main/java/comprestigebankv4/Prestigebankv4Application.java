@@ -25,5 +25,4 @@ public class Prestigebankv4Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Prestigebankv4Application.class, args);
 	}
-
 }
