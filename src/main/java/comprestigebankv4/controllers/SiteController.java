@@ -126,7 +126,7 @@ public class SiteController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("userRequest", new UserRequest());  // Creating an object for registration
-        return "/registration";
+        return "registration";
     }
 
     @PostMapping("/register")
@@ -139,7 +139,7 @@ public class SiteController {
             model.addAttribute("responseMessage", response.getResponseMessage());
         }
 
-        return "/registration";
+        return "registration";
     }
     @GetMapping("/setting")
     public String showSettingsForm(Model model, HttpServletRequest request) {
