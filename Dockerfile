@@ -8,7 +8,7 @@ COPY . /app
 RUN mvn clean install
 
 # Этап исполнения
-FROM openjdk:17-jdk-slim
+FROM maven:3.8.4-openjdk-17-slim AS build
 
 WORKDIR /app
 
