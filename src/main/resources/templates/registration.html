@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="shortcut icon" href="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" type="image/x-icon">
+  <link rel="stylesheet" th:href="@{/css/AccountStyleSheet.css}">
+  <meta charset="UTF-8">
+  <title>Account Prestige Bank</title>
+</head>
+<body  style="background-color: #e2e2bb;">
+<img src="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" alt="" style="height: 11rem;">
+<h1 color="black">Prestige Bank</h1>
+<div class="wrapper">
+  <form th:action="@{/register}" method="post" th:object="${userRequest}">
+    <label for="firstName">
+      Ad:
+    </label>
+    <input type="text" id="firstName" name="firstName" th:field="*{firstName}" placeholder="Adınızı daxil edin" required>
+    <label for="lastName">
+      Soyad:
+    </label>
+    <input type="text" id="lastName" name="lastName"  th:field="*{lastName}" placeholder="Soyadınızı daxil edin" required>
+    <label for="otherName">
+      Ata adı:
+    </label>
+    <input type="text" id="otherName" name="otherName" th:field="*{otherName}" placeholder="Ata adınızı daxil edin" required>
+    <label for="gender">Cinsinizi seçin:
+    </label>
+    <select id="gender" th:field="*{gender}" name="gender">
+      <option value="male">Kişi</option>
+      <option value="female">Qadın</option>
+    </select>
+    <label for="stateOfOrigin">
+      Mənşə dövlətinizi seçin:
+    </label>
+    <select id="stateOfOrigin" th:field="*{stateOfOrigin}" name="stateOfOrigin">
+      <option value="Azerbaijan">Azərbaycan</option>
+      <option value="Georgia">Gürcüstan</option>
+    </select>
+    <label for="address">
+      Yaşadığınız ünvan (Rayon/Küçə/Ev nömrəsi):
+    </label>
+    <input type="text" id="address" name="address" th:field="*{address}"  placeholder="Ünvanızı daxil edin" required>
+      <label for="eMail">
+        E-poçt:
+      </label>
+      <input type="text" id="eMail" name="eMail" th:field="*{username}"  placeholder="Emailınızı daxil edin" required>
+      <label for="phone">
+      Telefon:
+    </label>
+    <input type="text" id="phone" name="phone" th:field="*{phoneNumber}" placeholder="Telefon nömrəsi daxil edin" required>
+    <label for="alternatePhone">
+      Alternativ telefon nömrəsi (vacib deyil):
+    </label>
+    <input type="text" id="alternatePhone" name="alternatePhone" th:field="*{alternatePhoneNumber}" placeholder="Alternativ telefon nömrəsi daxil edin">
+    <label for="password">
+      Parol:
+    </label>
+    <input type="password" id="password" th:field="*{password}" name="password"
+           placeholder="Parolu daxil edin" required>
+    <label for="repeat-password">
+      Parol təkrarı:
+    </label>
+    <input type="password" id="repeat-password" name="password-repeated"
+           placeholder="Parolu təkrarlayın" required>
+    <div id="password-check"></div>
+    <div class="wrap">
+      <button type="submit">
+        Registrasiya
+      </button>
+    </div>
+  </form>
+  <div th:if="${responseMessage}">
+    <p th:text="${responseMessage}"></p>
+  </div>
+</div>
+<script>
+  var password = document.getElementById("password"),
+          confirm_password = document.getElementById("repeat-password"),
+          email = document.getElementById("eMail"),
+          phone = document.getElementById("phone");
+          alternatePhone = document.getElementById("alternatePhone");
+
+  function validatePassword() {
+    // Проверка на совпадение паролей
+    if (password.value != confirm_password.value) {
+      confirm_password.setCustomValidity("Parollar uyğun gəlmir");
+    } else {
+      confirm_password.setCustomValidity('');
+    }
+
+    // Проверка на минимальную длину пароля
+    if (password.value.length < 8) {
+      password.setCustomValidity("Parol ən azı 8 simvol uzunluğunda olmalıdır");
+    } else {
+      password.setCustomValidity('');
+    }
+  }
+
+  function validateEmail() {
+    // Регулярное выражение для проверки формата email
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(email.value)) {
+      email.setCustomValidity("Etibarlı e-poçt ünvanı daxil edin");
+    } else {
+      email.setCustomValidity('');
+    }
+  }
+
+  function validatePhone() {
+    // Регулярное выражение для проверки азербайджанских и грузинских номеров
+    var phonePattern = /^(?:\+994(50|51|55|70|77|60|99|10)|\+995(32|55|57|79|77|44|45))[0-9]{7}$/;
+
+    // Проверка основного телефона
+    if (!phonePattern.test(phone.value)) {
+      phone.setCustomValidity("Zəhmət olmasa, ya azərbaycan (+994), ya da gürcü (+995) nömrənizi daxil edin");
+    } else {
+      phone.setCustomValidity('');
+    }
+
+    // Проверка альтернативного телефона
+    if (alternatePhone.value === "") {
+      alternatePhone.setCustomValidity('');
+    } else if (!phonePattern.test(alternatePhone.value)) {
+      alternatePhone.setCustomValidity("Zəhmət olmasa, ya azərbaycan (+994), ya da gürcü (+995) nömrənizi daxil edin");
+    } else {
+      alternatePhone.setCustomValidity('');
+    }
+  }
+
+  // Валидация при изменении и вводе
+  password.onchange = validatePassword;
+  confirm_password.onkeyup = validatePassword;
+  email.onkeyup = validateEmail;
+  phone.onkeyup = validatePhone;
+  alternatePhone.onkeyup=validatePhone;
+</script>
+
+</body>
+</html>

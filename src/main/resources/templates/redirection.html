@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Страница с редиректом</title>
+    <script>
+        window.onload = function() {
+            // Получаем JWT токен из атрибута модели
+            const jwtToken = /*[[${jwtToken}]]*/ '';
+
+            // Устанавливаем JWT токен в заголовок
+            fetch('/targetPage', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + jwtToken
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/dashboard.html';  // Редирект на другую страницу
+                    }
+                })
+                .catch(error => console.log('Error:', error));
+        };
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../CSS/a.css">
+    <link rel="stylesheet" href="../CSS/b.css">
+    <link rel="stylesheet" href="../CSS/c.css">
+    <link rel="stylesheet" href="../CSS/d.css">
+    <link rel="stylesheet" href="../CSS/e.css">
+    <link rel="stylesheet" href="../CSS/f.css">
+    <link rel="stylesheet" href="../CSS/g.css">
+    <link rel="stylesheet" href="../CSS/h.css">
+    <link rel="stylesheet" href="../CSS/i.css">
+    <link rel="stylesheet" href="../CSS/j.css">
+    <link rel="stylesheet" href="../CSS/Klient.css">
+    <title>Prestige Bank</title>
+</head>
+<body>
+<div class="main-content">
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <a>
+                    <img src="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" alt="" class="logo" style="height: 100px; width: 200px;">
+                </a>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/dashboard">Home</a></li>
+                    <li><a href="/transfer">Əməliyyatlar</a></li>
+                    <li><a href="/transactions">Əməliyyat tarixçəsi</a></li>
+                    <li><a href="/setting">Ayarlar</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <p style="margin-top: 330px" th:text="'Account Number: ' + ${account.getAccountNumber()}"></p>
+                <form action="/logout" method="get">
+                    <button class = "show-cvv-btn">Həsabdan çıxmaq</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="transfer-form" class="transaction-form">
+                <h3>Hesabın ayarları</h3>
+                <form th:action="@{/setting}" method="post" th:object="${accountUpdateRequest}">
+                    <label for="address">Yeni ünvan:</label>
+                    <input type="text" id="address" name="address" th:field="*{address}" placeholder="Yeni ünvanı daxil edin">
+                    <label for="phone">Yeni telefon nömrəsi:</label>
+                    <input type="text" id="phone" name="phone" th:field="*{phoneNumber}" placeholder="Yeni telefon nömrəsi">
+                    <label for="password">Yeni parol:</label>
+                    <input type="password" id="password" name="password" th:field="*{password}" placeholder="Yeni parolu daxil edin" required>
+                    <label for="repeat-password">Yeni parolu təsdiqlə:</label>
+                    <input type="password" id="repeat-password" name="repeat-password" placeholder="Parolu təkrar daxil edin" required>
+                    <button class="btn" type="submit">Təsdiq etmək</button>
+                </form>
+                <div th:if="${responseMessage}">
+                    <p th:text="${responseMessage}"></p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Currency Exchange -->
+        <div class="currency">
+            <h3>Valyuta məzənnələri</h3>
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <span>Valyuta</span>
+                    </td>
+                    <td>
+                        <span>Alış</span>
+                    </td>
+                    <td>
+                        <span>Satış</span>
+                    </td><td>
+                </td>
+                </tr>
+                <tr>
+                    <td>USD</td>
+                    <td>1.6970</td>
+                    <td>1.7020</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>EUR</td>
+                    <td>1.7778</td>
+                    <td>1.8249</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>RUB</td>
+                    <td>0.0149</td>
+                    <td>0.0185</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>GBP</td>
+                    <td>2.1099</td>
+                    <td>2.2019</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>TRY</td>
+                    <td>0.0307</td>
+                    <td>0.0607</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    var password = document.getElementById("password"),
+        confirm_password = document.getElementById("repeat-password"),
+        phone = document.getElementById("phone");
+
+    function validatePassword() {
+        // Проверка на совпадение паролей
+        if (password.value !== confirm_password.value) {
+            confirm_password.setCustomValidity("Parollar uyğun gəlmir");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+
+        // Проверка на минимальную длину пароля
+        if (password.value.length < 8) {
+            password.setCustomValidity("Parol ən azı 8 simvol uzunluğunda olmalıdır");
+        } else {
+            password.setCustomValidity('');
+        }
+    }
+
+    function validatePhone() {
+        // Регулярное выражение для проверки азербайджанских и грузинских номеров
+        var phonePattern = /^(?:\+994(50|51|55|70|77|60|99|10)|\+995(32|55|57|79|77|44|45))[0-9]{7}$/;
+
+        // Проверка основного телефона
+        if (phone.value === "") {
+                phone.setCustomValidity('');
+        }
+        else if (!phonePattern.test(phone.value)) {
+            phone.setCustomValidity("Zəhmət olmasa, ya azərbaycan (+994), ya da gürcü (+995) nömrənizi daxil edin");
+        } else {
+            phone.setCustomValidity('');
+        }
+    }
+
+    // Валидация при изменении и вводе
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+    phone.onkeyup = validatePhone;
+</script>
+</body>

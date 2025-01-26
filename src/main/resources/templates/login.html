@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="shortcut icon" href="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/AccountStyleSheet.css}">
+    <title>Account Prestige Bank</title>
+</head>
+<body style="background-color: #e2e2bb;">
+    <img src="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" alt="" style="height: 11rem;">
+    <h1 style="color: black;">Prestige Bank</h1>
+    <div class="wrapper">
+        <form  method="post" action = "/login">
+            <label for="email">
+                E-poçt:
+            </label>
+            <input type="text" id="email" name="username" placeholder="E-poçtu daxil edin" required>
+
+            <label for="password">
+                Parol:
+            </label>
+            <input type="password" id="password" name="password" placeholder="Parolu daxil edin" required>
+            <div class="wrap">
+                <button type="submit">
+                    Daxil olmaq
+                </button>
+            </div>
+            <div th:if="${error}" style="color: red;">
+                <p th:text="${error}"></p>
+            </div>
+            <a th:href="@{/register}">Bankın istifadəçi deyilsiz?</a>
+        </form>
+    </div>
+</body>
+</html>

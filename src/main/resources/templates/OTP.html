@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="shortcut icon" href="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" type="image/x-icon">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="CSS/AccountStyleSheet.css">
+  <title>Account Prestige Bank</title>
+</head>
+<body style="background-color: #e2e2bb;">
+<img src="https://r.mobirisesite.com/979922/assets/images/g7fe510f007741ca04d88c532655a-h_m4e2c5tl.jpg" alt="" style="height: 11rem;">
+<h1 color="black">Prestige Bank</h1>
+<div class="wrapper">
+  <p>OTP kodunu daxil etmək üçün 5 dəqiqə vaxtınız var.</p>
+  <div id="timer">05:00</div>
+  <form method="post" action="/OTP">
+    <label for="code">
+      Telefondan OTP kodu daxil edin!
+    </label>
+    <input type="text" id="code" name="code" placeholder="Telefondan OTP kodu daxil edin!" required>
+    <div class="wrap">
+      <button type="submit">
+        Daxil olmaq
+      </button>
+    </div>
+
+  </form>
+</div>
+<script>
+  // Таймер на 5 минут (300 секунд)
+  let timer = 300;
+  const timerElement = document.getElementById("timer");
+
+  // Функция для обновления таймера
+  function updateTimer() {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+
+    // Форматирование времени в виде MM:SS
+    timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    if (timer === 0) {
+      // Когда время истекает, перенаправить пользователя или выполнить другое действие
+      alert("Время для ввода кода истекло!");
+      window.location.href = "/login";  // Перенаправить на страницу логина (или другую)
+    } else {
+      // Уменьшать таймер каждую секунду
+      timer--;
+      setTimeout(updateTimer, 1000);
+    }
+  }
+
+  // Запуск таймера
+  updateTimer();
+</script>
+</body>
+</html>
